@@ -27,6 +27,14 @@ def submit():
     age.delete(0,END)
     address.delete(0,END)
     email.delete(0,END)
+                   
+def delete():
+    conn=sqlite3.connect('C:/.vms/OOP/personal_info.db')
+    c=conn.cursor()
+    c.execute ("DELETE from student_info WHERE oid="+delete_box.get())
+
+    conn.commit()
+    conn.close()
     
 def query():
     conn=sqlite3.connect('C:/.vms/OOP/personal_info.db')
@@ -36,7 +44,7 @@ def query():
 
     print_records=" "
     for record in records:
-        print_records+=str(record[0])+" "+str(record[1])+" "+str(record[2])+" "+str(record[3])+" "+str(record[4])+"\n\n"
+        print_records+=str(record[0])+" "+str(record[1])+" "+str(record[2])+" "+str(record[3])+" "+str(record[4])+" "+"\t"+str(record[5])+"\n\n"
 
         query_label=Label(root,text=print_records)
         query_label.grid(row=30,column=0,columnspan=2)
@@ -45,8 +53,8 @@ def query():
     conn.close()
 
 
-                   
-              
+
+                 
 
 '''
 c.execute("""CREATE TABLE "student_info" (
@@ -57,6 +65,9 @@ c.execute("""CREATE TABLE "student_info" (
 	"email"	TEXT
 )""")
 '''
+
+
+
 
 first_name=Entry(root,width=30)
 first_name.grid(row=0,column=1,padx=20)
@@ -85,5 +96,18 @@ submit_btn.grid(row=6,column=0,columnspan=2,pady=10,padx=10,ipadx=110)
 
 query_btn=Button(root,text="Show records",command=query)
 query_btn.grid(row=7,column=0,columnspan=2,pady=10,padx=10,ipadx=137)
+
+query_btn=Button(root,text="Delete Record",command=delete)
+query_btn.grid(row=12,column=0,columnspan=2,pady=2,padx=10,ipadx=136)
+
+
+
+
+delete_box=Entry(root,width=30)
+delete_box.grid(row=10,column=1,padx=30)
+delete_box_label=Label(root,text="Select ID No.")
+delete_box_label.grid(row=10,column=0)
+
+
 
 root.mainloop()
